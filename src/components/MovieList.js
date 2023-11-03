@@ -3,10 +3,6 @@ import { useEffect, useState } from "react";
 import MovieBox from "./Box";
 import { styled } from "@mui/system";
 
-const listMovie = styled('div')({
-  display: 'flex'
-})
-
 export default function MovieList({url}){
   const [movieList, setMovieList] = useState([]);
   useEffect(() => {
@@ -23,12 +19,10 @@ export default function MovieList({url}){
   }, [url])
   
   return(
-    <listMovie>
-      {movieList.map((movie) => {
-        return(
-          <MovieBox movie={movie}/>
-        )
-      })}
-    </listMovie>
+    movieList.map((movie) => {
+      return(
+        <MovieBox movie={movie}/>
+      )
+    })
   )
 }
