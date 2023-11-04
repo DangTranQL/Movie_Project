@@ -5,7 +5,9 @@ import { styled } from "@mui/system";
 
 const ListMovie = styled('div')({
   display: 'flex',
+  width: '100%',
   position: 'relative',
+  overflow: 'scroll',
 })
 
 export default function MovieList({url}){

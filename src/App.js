@@ -9,7 +9,11 @@ const urlList = ["/popular", "/airing_today", "/top_rated"]
 
 function App() {
   return (
-    <MovieList url="https://api.themoviedb.org/3/movie/popular"/>
+    <div>
+      <MovieList url="https://api.themoviedb.org/3/movie/popular"/>
+      <MovieList url="https://api.themoviedb.org/3/movie/airing_today"/>
+      <MovieList url="https://api.themoviedb.org/3/movie/top_rated"/>
+    </div>
   );
 }
 
