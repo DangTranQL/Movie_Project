@@ -1,19 +1,20 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { useEffect } from 'react';
-import axios from 'axios';
-import MovieList from './components/MovieList';
-import { styled } from '@mui/system';
-
-const urlList = ["/popular", "/airing_today", "/top_rated"]
+import React from 'react';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomePage from './Pages/HomePage';
+import MoviePage from './Pages/MoviePage';
 
 function App() {
   return (
-    <div>
-      <MovieList url="https://api.themoviedb.org/3/movie/popular"/>
-      <MovieList url="https://api.themoviedb.org/3/movie/airing_today"/>
-      <MovieList url="https://api.themoviedb.org/3/movie/top_rated"/>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<HomePage/>}>
+          <Route index element={<HomePage />}/>
+          <Route path="/movie/:id" element={<MoviePage/>}/>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
