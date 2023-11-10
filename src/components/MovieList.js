@@ -2,7 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import MovieBox from "./Box";
 import { styled } from "@mui/system";
-import { Pagination } from "@mui/material";
+import { Button} from "@mui/material";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const ListMovie = styled('div')({
   display: 'flex',
@@ -13,24 +14,27 @@ const ListMovie = styled('div')({
   gap: 30,
 })
 
-const MoviePagination = styled('div')({
+const MovieRow = styled('div')({
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'column',
+  backgroundColor: 'lightblue',
 })
 
 export default function MovieList({url}){
   const [movieList, setMovieList] = useState([]);
   const [moviePage, setMoviePage] = useState(1);
-  let totalPage = 0;
+  const [totalPage, setTotalPage] = useState(1);
 
+  const navigate = useNavigate();
+  const seeAll = () => navigate(`/movie/${url.split('/')[5]}`);
+  
   useEffect(() => {
-    console.log(process.env.REACT_APP_API_KEY)
     const fetchData = async() => {
       try {
         const response = await axios.get(url, {params:{api_key: process.env.REACT_APP_API_KEY, page: moviePage}});
         setMovieList(response.data.results);
-        totalPage = response.data.total_pages;
+        setTotalPage(response.data.total_pages);
       } catch (error) {
         console.log(error);
       }
@@ -39,7 +43,7 @@ export default function MovieList({url}){
   }, [url, moviePage])
   
   return(
-    <MoviePagination>
+    <MovieRow>
       <ListMovie>
         {movieList.map((movie) => {
           return(
@@ -47,9 +51,7 @@ export default function MovieList({url}){
           )
         })}
       </ListMovie>
-      <Pagination count={totalPage} onChange={(e, page) => {
-        setMoviePage(page)
-      }}/>
-    </MoviePagination>
+      <Button onClick={seeAll} style={{backgroundColor:'blue', color: 'white', margin: '3px'}}>See All</Button>
+    </MovieRow>
   )
 }
