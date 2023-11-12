@@ -26,8 +26,9 @@ export default function MovieList({url}){
   const [moviePage, setMoviePage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
 
+  const tag = url.split('/')[5];
   const navigate = useNavigate();
-  const seeAll = () => navigate(`/movie/${url.split('/')[5]}`);
+  const seeAll = () => navigate(`/movie/tag/${tag}`);
   
   useEffect(() => {
     const fetchData = async() => {
@@ -44,6 +45,7 @@ export default function MovieList({url}){
   
   return(
     <MovieRow>
+      <h2>{tag}</h2>
       <ListMovie>
         {movieList.map((movie) => {
           return(

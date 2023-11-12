@@ -15,6 +15,10 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import ResponsiveDrawer from './Filter';
+import PersistentDrawerLeft from './Filter';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -62,6 +66,10 @@ export default function PrimarySearchAppBar() {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const [searchText, setSearchText] = React.useState("");
+
+  const navigate = useNavigate();
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -167,6 +175,7 @@ export default function PrimarySearchAppBar() {
           >
             <MenuIcon />
           </IconButton>
+          <PersistentDrawerLeft/>
           <Typography
             variant="h6"
             noWrap
@@ -179,11 +188,16 @@ export default function PrimarySearchAppBar() {
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
-            <StyledInputBase
+            <StyledInputBase onChange={(event)=>{
+              setSearchText(event.target.value);
+            }}
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
+          <Button style={{color: "white"}} onClick={() => {
+            navigate(`/movie/search/${searchText}`);
+          }}>SEARCH</Button>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton size="large" aria-label="show 4 new mails" color="inherit">

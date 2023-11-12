@@ -21,19 +21,19 @@ const MovieRow = styled('div')({
     backgroundColor: 'lightblue',
 })
 
-export default function TagPage() {
+export default function SearchPage() {
     const [movieList, setMovieList] = useState([]);
     const [moviePage, setMoviePage] = useState(1);
     const [totalPage, setTotalPage] = useState(1);
 
-    const {tag} = useParams();
+    const {keyword} = useParams();
 
-    const url = `${process.env.REACT_APP_URL}/${tag}`;
+    const url = `${process.env.REACT_APP_SEARCH}`;
     
     useEffect(() => {
         const fetchData = async() => {
         try {
-            const response = await axios.get(url, {params:{api_key: process.env.REACT_APP_API_KEY, page: moviePage}});
+            const response = await axios.get(url, {params:{api_key: process.env.REACT_APP_API_KEY, query: keyword}});
             setMovieList(response.data.results);
             setTotalPage(response.data.total_pages);
         } catch (error) {

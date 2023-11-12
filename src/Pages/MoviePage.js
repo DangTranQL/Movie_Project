@@ -14,14 +14,15 @@ const Actors = styled('div')({
 
 export default function MoviePage() {
     const {movieId} = useParams();
-    const [movieDetail, setMovieDetail] = useState()
-    const [actorList, setActorList] = useState()
+    const [movieDetail, setMovieDetail] = useState({})
+    const [actorList, setActorList] = useState({})
 
     useEffect(() => {
         const fetchData = async() => {
           try {
-            const response = await axios.get(`${process.env.REACT_APP_URL}/${movieId}`, {params:{api_key: process.env.REACT_APP_API_KEY, page: movieDetail}});
-            const response2 = await axios.get(`${process.env.REACT_APP_URL}/${movieId}/credits`, {params:{api_key: process.env.REACT_APP_API_KEY, page: movieDetail}});
+            const response = await axios.get(`${process.env.REACT_APP_URL}/${movieId}`, {params:{api_key: process.env.REACT_APP_API_KEY}});
+            const response2 = await axios.get(`${process.env.REACT_APP_URL}/${movieId}/credits`, {params:{api_key: process.env.REACT_APP_API_KEY}});
+            console.log(response.data)
             setMovieDetail(response.data);
             setActorList(response2.data);
           } catch (error) {
@@ -29,24 +30,25 @@ export default function MoviePage() {
           }
         }
         fetchData();
-      }, [movieId, movieDetail]);
+      }, [movieId]);
+
     return(
         <MovieContent>
           <div>
-            <img src={`${process.env.REACT_APP_IMAGE_URL_PATH}${movieDetail?.backdrop_path}`} style={{width: '30%', margin: '6px'}}/>
+            <img src={`${process.env.REACT_APP_IMAGE_URL_PATH}${movieDetail?.backdrop_path}`} style={{width: '100%', margin: '6px'}}/>
           </div>
           <div>
-            <h2>{movieDetail?.title}</h2>
+            <h2>{movieDetail.title}</h2>
             <span>Genres: 
-              {movieDetail.genres.map((genre) => {
+              {movieDetail.genres?.map((genre) => {
                 return(
-                  <Button>genre.name</Button>
+                  <Button>{genre.name}</Button>
                 )
               })}
             </span>
-            <h1>Overview: {movieDetail.overview}</h1>
+            <h1>Overview: {movieDetail?.overview}</h1>
             <Actors>
-              {actorList.cast.map((actor) => {
+              {actorList.cast?.map((actor) => {
                 return(
                   <div>
                     <img src={actor.profile_path}/>

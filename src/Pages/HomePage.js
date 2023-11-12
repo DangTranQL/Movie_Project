@@ -13,7 +13,6 @@ const PageHome = styled('div')({
 export default function HomePage() {
   return (
     <PageHome>
-      <PrimarySearchAppBar/>
       <MovieList url="https://api.themoviedb.org/3/movie/popular"/>
       <MovieList url="https://api.themoviedb.org/3/movie/now_playing"/>
       <MovieList url="https://api.themoviedb.org/3/movie/top_rated"/>
