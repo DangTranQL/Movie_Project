@@ -51,7 +51,7 @@ export default function MoviePage() {
               {actorList.cast?.map((actor) => {
                 return(
                   <div style={{display: 'flex', flexDirection: 'column', margin: '4px'}}>
-                    <img src={`	https://www.themoviedb.org/t/p/w276_and_h350_face${actor.profile_path}`} style={{width:'30%'}}/>
+                    <img src={`	https://www.themoviedb.org/t/p/w276_and_h350_face${actor.profile_path}`} style={{width:'50%'}}/>
                     <span>{actor.name}</span>
                     <span>{actor.character}</span>
                   </div>

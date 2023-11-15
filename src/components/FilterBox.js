@@ -23,19 +23,7 @@ const Title = styled('span')({
 })
 
 const Rating = styled('span')({
-    position: 'absolute',
-    top: '60%',
-    borderRadius: '50%',
-    display: 'inline-block',
-    borderWidth: 4,
-    borderColor: 'green',
-    borderStyle: 'solid',
-    color: 'white',
-    backgroundColor: 'black',
-    fontSize: '100%',
-    fontWeight: 'bold',
-    margin: -10,
-    padding: 5,
+    position: 'relative',
 })
 
 export default function FilterBox({movie}) {

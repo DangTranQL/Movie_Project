@@ -29,6 +29,7 @@ export default function TagPage() {
     const [moviePage, setMoviePage] = useState(1);
     const [totalPage, setTotalPage] = useState(1);
     const [genres, setGenres] = useState([])
+    const [filter, setFilter] = useState([])
 
     const {tag} = useParams();
 
@@ -59,6 +60,23 @@ export default function TagPage() {
         })
     }
 
+    const [filteredMovies, setFilteredMovies] = useState([]);
+
+    useEffect(() => {
+        const filterMovies = () => {
+            if (filter.length === 0) {
+                setFilteredMovies(movieList);
+            } else {
+                const filtered = movieList.filter(movie =>
+                    checkSubset(movie.genre_ids, filter)
+                );
+                setFilteredMovies(filtered);
+            }
+        };
+
+        filterMovies();
+    }, [filter, movieList]);
+
     return(
         <div>
             <PrimarySearchAppBar/>
@@ -68,6 +86,7 @@ export default function TagPage() {
                         <ListItem key={genre.name} disablePadding>
                         <ListItemButton onClick={() => {
                             genresList.push(genre.id)
+                            setFilter(genresList)
                         }}>
                             <ListItemText primary={genre.name} />
                         </ListItemButton>
@@ -76,7 +95,7 @@ export default function TagPage() {
                 </List>
                 <MovieRow>
                     <ListMovie>
-                        {movieList.map((movie) => {
+                        {filteredMovies.map((movie) => {
                             if (genresList.length === 0){
                                 return(
                                     <FilterBox movie={movie}/>
