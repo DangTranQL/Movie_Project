@@ -95,18 +95,9 @@ export default function TagPage() {
                 <MovieRow>
                     <ListMovie>
                         {filteredMovies.map((movie) => {
-                            if (genresList.length === 0){
-                                return(
-                                    <FilterBox movie={movie}/>
-                                )
-                            }
-                            else{
-                                if (checkSubset(movie.genre_ids, genresList)){
-                                    return(
-                                        <FilterBox movie={movie}/>
-                                    )
-                                }
-                            } 
+                            return(
+                                <FilterBox movie={movie}/>
+                            )
                         })}
                     </ListMovie>
                     <Pagination count={totalPage} onChange={(e, page) => {
