@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import MovieList from '../components/MovieList';
 import { styled } from '@mui/system';
-import PrimarySearchAppBar from '../components/Search';
 
 const PageHome = styled('div')({
     display: 'flex',

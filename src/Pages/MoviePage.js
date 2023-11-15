@@ -4,10 +4,6 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import {useParams } from 'react-router-dom'
 
-const MovieContent = styled('div')({
-  display: 'flex',
-})
-
 const Actors = styled('div')({
 
 })
@@ -35,7 +31,7 @@ export default function MoviePage() {
     return(
         <div style={{margin: '4px'}}>
           <div style={{display: 'flex', flexDirection:'column', justifyContent: 'center', alignItems: 'center'}}>
-            <img src={`${process.env.REACT_APP_IMAGE_URL_PATH}${movieDetail?.backdrop_path}`} style={{width: '20%', margin: '6px'}}/>
+            <img alt="" src={`${process.env.REACT_APP_IMAGE_URL_PATH}${movieDetail?.backdrop_path}`} style={{width: '20%', margin: '6px'}}/>
           </div>
           <div style={{display: 'flex', flexDirection:'column', justifyContent: 'center', alignItems: 'center'}}>
             <h2>{movieDetail.title}</h2>
@@ -51,7 +47,7 @@ export default function MoviePage() {
               {actorList.cast?.map((actor) => {
                 return(
                   <div style={{display: 'flex', flexDirection: 'column', margin: '4px'}}>
-                    <img src={`	https://www.themoviedb.org/t/p/w276_and_h350_face${actor.profile_path}`} style={{width:'50%'}}/>
+                    <img alt="" src={`	https://www.themoviedb.org/t/p/w276_and_h350_face${actor.profile_path}`} style={{width:'50%'}}/>
                     <span>{actor.name}</span>
                     <span>{actor.character}</span>
                   </div>

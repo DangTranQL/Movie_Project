@@ -1,8 +1,7 @@
 import styled from "@emotion/styled";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import MovieBox from "../components/Box";
-import { Button, List, ListItem, ListItemButton, ListItemText, Pagination } from "@mui/material";
+import { List, ListItem, ListItemButton, ListItemText, Pagination } from "@mui/material";
 import { useParams } from "react-router-dom";
 import PrimarySearchAppBar from "../components/Search";
 import FilterBox from "../components/FilterBox";

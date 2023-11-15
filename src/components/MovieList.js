@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import MovieBox from "./Box";
 import { styled } from "@mui/system";
 import { Button} from "@mui/material";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ListMovie = styled('div')({
   display: 'flex',

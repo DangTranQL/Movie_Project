@@ -1,6 +1,5 @@
 import { styled } from "@mui/system";
-import { useHref, useNavigate } from "react-router-dom";
-import MoviePage from "../Pages/MoviePage";
+import { useNavigate } from "react-router-dom";
 const BoxMovie = styled('div')({
     display: 'flex',
     flexDirection: 'column',
