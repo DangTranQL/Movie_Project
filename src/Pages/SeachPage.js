@@ -33,7 +33,7 @@ export default function SearchPage() {
     useEffect(() => {
         const fetchData = async() => {
         try {
-            const response = await axios.get(url, {params:{api_key: process.env.REACT_APP_API_KEY, query: keyword}});
+            const response = await axios.get(url, {params:{api_key: process.env.REACT_APP_API_KEY, page: moviePage, query: keyword}});
             setMovieList(response.data.results);
             setTotalPage(response.data.total_pages);
         } catch (error) {
@@ -41,7 +41,7 @@ export default function SearchPage() {
         }
         }
         fetchData();
-    }, [url, moviePage])
+    }, [url, moviePage, keyword])
 
     return(
         <MovieRow>

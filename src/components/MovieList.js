@@ -23,8 +23,6 @@ const MovieRow = styled('div')({
 
 export default function MovieList({url}){
   const [movieList, setMovieList] = useState([]);
-  const [moviePage, setMoviePage] = useState(1);
-  const [totalPage, setTotalPage] = useState(1);
 
   const tag = url.split('/')[5];
   const navigate = useNavigate();
@@ -33,15 +31,14 @@ export default function MovieList({url}){
   useEffect(() => {
     const fetchData = async() => {
       try {
-        const response = await axios.get(url, {params:{api_key: process.env.REACT_APP_API_KEY, page: moviePage}});
+        const response = await axios.get(url, {params:{api_key: process.env.REACT_APP_API_KEY}});
         setMovieList(response.data.results);
-        setTotalPage(response.data.total_pages);
       } catch (error) {
         console.log(error);
       }
     }
     fetchData();
-  }, [url, moviePage])
+  }, [url])
   
   return(
     <MovieRow>

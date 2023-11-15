@@ -15,7 +15,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { Button, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Button, Divider, Drawer, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -100,8 +100,6 @@ export default function PrimarySearchAppBar() {
   const [open, setOpen] = React.useState(false);
 
   const [movieList, setMovieList] = React.useState([]);
-  const [moviePage, setMoviePage] = React.useState(1);
-  const [totalPage, setTotalPage] = React.useState(1);
 
   let genresList = [];
 
@@ -110,16 +108,15 @@ export default function PrimarySearchAppBar() {
   React.useEffect(() => {
     const fetchData = async() => {
       try {
-        const response = await axios.get(url, {params:{api_key: process.env.REACT_APP_API_KEY, page: moviePage}});
+        const response = await axios.get(url, {params:{api_key: process.env.REACT_APP_API_KEY}});
         setMovieList(response.data.genres);
-        setTotalPage(response.data.total_pages);
         console.log(response)
       } catch (error) {
         console.log(error);
       }
     }
     fetchData();
-  }, [url, moviePage])
+  }, [url])
 
   const handleDrawerOpen = () => {
     setOpen(true);
