@@ -33,11 +33,11 @@ export default function MoviePage() {
       }, [movieId]);
 
     return(
-        <MovieContent>
-          <div>
-            <img src={`${process.env.REACT_APP_IMAGE_URL_PATH}${movieDetail?.backdrop_path}`} style={{width: '100%', margin: '6px'}}/>
+        <div style={{margin: '4px'}}>
+          <div style={{display: 'flex', flexDirection:'column', justifyContent: 'center', alignItems: 'center'}}>
+            <img src={`${process.env.REACT_APP_IMAGE_URL_PATH}${movieDetail?.backdrop_path}`} style={{width: '20%', margin: '6px'}}/>
           </div>
-          <div>
+          <div style={{display: 'flex', flexDirection:'column', justifyContent: 'center', alignItems: 'center'}}>
             <h2>{movieDetail.title}</h2>
             <span>Genres: 
               {movieDetail.genres?.map((genre) => {
@@ -46,12 +46,12 @@ export default function MoviePage() {
                 )
               })}
             </span>
-            <h1>Overview: {movieDetail?.overview}</h1>
-            <Actors>
+            <h3 style={{width: '70%'}}>Overview: {movieDetail?.overview}</h3>
+            <Actors style={{display: 'flex', overflowX: 'scroll', width: '100%'}}>
               {actorList.cast?.map((actor) => {
                 return(
-                  <div>
-                    <img src={actor.profile_path}/>
+                  <div style={{display: 'flex', flexDirection: 'column', margin: '4px'}}>
+                    <img src={`	https://www.themoviedb.org/t/p/w276_and_h350_face${actor.profile_path}`} style={{width:'30%'}}/>
                     <span>{actor.name}</span>
                     <span>{actor.character}</span>
                   </div>
@@ -59,6 +59,6 @@ export default function MoviePage() {
               })}
             </Actors>
           </div>
-        </MovieContent>
+        </div>
     )
 }

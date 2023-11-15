@@ -15,10 +15,15 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { Button } from '@mui/material';
+import { Button, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ResponsiveDrawer from './Filter';
 import PersistentDrawerLeft from './Filter';
+import { useTheme } from '@emotion/react';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import axios from 'axios';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -60,9 +65,72 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+const drawerWidth = 240;
+
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+  ({ theme, open }) => ({
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: `-${drawerWidth}px`,
+    ...(open && {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    }),
+  }),
+);
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+  justifyContent: 'flex-end',
+}));
+
 export default function PrimarySearchAppBar() {
+  const theme = useTheme();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const [open, setOpen] = React.useState(false);
+
+  const [movieList, setMovieList] = React.useState([]);
+  const [moviePage, setMoviePage] = React.useState(1);
+  const [totalPage, setTotalPage] = React.useState(1);
+
+  let genresList = [];
+
+  const url = 'https://api.themoviedb.org/3/genre/movie/list'
+  
+  React.useEffect(() => {
+    const fetchData = async() => {
+      try {
+        const response = await axios.get(url, {params:{api_key: process.env.REACT_APP_API_KEY, page: moviePage}});
+        setMovieList(response.data.genres);
+        setTotalPage(response.data.total_pages);
+        console.log(response)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, [url, moviePage])
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -166,7 +234,7 @@ export default function PrimarySearchAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
+          <IconButton onClick={handleDrawerOpen}
             size="large"
             edge="start"
             color="inherit"
@@ -175,7 +243,6 @@ export default function PrimarySearchAppBar() {
           >
             <MenuIcon />
           </IconButton>
-          <PersistentDrawerLeft/>
           <Typography
             variant="h6"
             noWrap
@@ -240,6 +307,40 @@ export default function PrimarySearchAppBar() {
           </Box>
         </Toolbar>
       </AppBar>
+      <Drawer
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+          },
+        }}
+        variant="persistent"
+        anchor="left"
+        open={open}
+      >
+        <DrawerHeader>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+        </DrawerHeader>
+        <Divider />
+        <List>
+          {movieList.map((genre) => (
+            <ListItem key={genre.name} disablePadding>
+              <ListItemButton onClick={() => {
+                genresList.push(genre.id)
+              }}>
+                <ListItemText primary={genre.name} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
+      <Main open={open}>
+        
+      </Main>
       {renderMobileMenu}
       {renderMenu}
     </Box>
